@@ -6,18 +6,10 @@ conda create --name gtd python=3.11
 
 conda activate gtd
 
-# Create requirements
-
-For pip
-pip freeze > requirements.txt
-
-For conda
-conda list --export > conda-requirements.txt
-
 
 # Install dependencies
 
-conda install conda-requirements.txt
+conda install requirements.txt
 
 pip install -r requirements.txt
 

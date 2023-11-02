@@ -14,7 +14,7 @@ def create_embeddings_for_articles(eventid: str):
 
 
     # load JSON data from file
-    with open('server/data/events.json') as f:
+    with open('server/data/events.json', encoding='utf-8') as f:
         data = json.load(f)
     
     # Access the event with the given eventid
@@ -27,8 +27,8 @@ def create_embeddings_for_articles(eventid: str):
     large_text = ' '.join(source['text'] for source in sources)
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=400,
-        chunk_overlap=70,
+        chunk_size=300,
+        chunk_overlap=75,
     )
     # Split the large text into chunks
     docs = text_splitter.split_text(large_text)

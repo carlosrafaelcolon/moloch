@@ -2,7 +2,6 @@ import os
 import pinecone
 from langchain.vectorstores import Pinecone
 from server.chat.embeddings.openai import embeddings
-from server.chat.models import QArgs
 
 pinecone.init(
     api_key=os.getenv("PINECONE_KEY"),
@@ -10,16 +9,16 @@ pinecone.init(
     )   # Initialize Pinecone
 
 
-vector_store = Pinecone.from_existing_index(
+pinecone_vector_store = Pinecone.from_existing_index(
     os.getenv("PINECONE_INDEX_NAME"), embeddings
 )
 
-def build_chat_retriever(chat_args):
-    return vector_store.build_retriever()
-
-def build_retriever(q_args: QArgs):
-    search_kwargs = {"filter": {"eventid": q_args.eventid}}
-    return vector_store.as_retriever(
+def build_retriever(chat_args, k):
+    # "filter": { "pdf_id": chat_args.pdf_id },
+    search_kwargs = {
+        "k": k
+    }
+    return pinecone_vector_store.as_retriever(
         search_kwargs=search_kwargs
     )
-
+    

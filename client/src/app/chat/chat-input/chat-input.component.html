@@ -1,0 +1,12 @@
+<!-- <textarea [formControl]="chatInput"></textarea>
+<button (click)="onSubmit()">Send</button> -->
+
+<mat-form-field class="AppChatInput">
+    <!-- <mat-label></mat-label> -->
+    <textarea matInput placeholder="Message Moloch..." [formControl]="chatInput"></textarea>
+
+      <button matSuffix mat-icon-button  (click)="onSubmit()">
+        <mat-icon>send</mat-icon>
+      </button>
+ 
+  </mat-form-field>

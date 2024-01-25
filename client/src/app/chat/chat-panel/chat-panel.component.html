@@ -1,0 +1,19 @@
+<!-- <div class="AppChatPanel">
+    <div class="chat-box" >
+        <app-chat-list [messages]="(activeConversation$ | async)?.messages || []"></app-chat-list>
+    </div>
+    <div class="chat-input-wrapper" >
+        <app-chat-input  (emitInputValue)="handleSubmit($event)"></app-chat-input>
+    </div>
+</div> -->
+<div class="AppChatPanel">
+    <div class="chat-box" >
+        <div class="ChatListContainer">
+            <app-chat-list  [messages]="(activeConversation$ | async)?.messages || []"></app-chat-list>
+        </div>
+        
+    </div>
+    <div class="chat-input-wrapper" >
+        <app-chat-input  (emitInputValue)="handleSubmit($event)"></app-chat-input>
+    </div>
+</div>

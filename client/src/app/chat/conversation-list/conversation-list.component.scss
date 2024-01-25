@@ -1,0 +1,14 @@
+.AppConversationList {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    .ConversationItem {
+        min-height:35px;
+        padding: 5px 10px;
+        
+        &:hover {
+            cursor: pointer;
+            background-color: #efefef;
+        }
+    }
+}

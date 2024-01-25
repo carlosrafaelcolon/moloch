@@ -1,0 +1,20 @@
+
+
+<div class="AppChatList">
+    <ng-container *ngFor="let message of messages">
+        <app-user-message *ngIf="message.role === 'user' || message.role === 'human'"
+            [content]="message.content"></app-user-message>
+        <app-assistant-message *ngIf="message.role === 'assistant' || message.role === 'ai'"
+            [content]="message.content"></app-assistant-message>
+        <div *ngIf="message.role === 'pending'" class="AppMessage">
+            <div class="AppMessage_role">
+                <div class="role-header">Moloch</div>
+            </div>
+            <div class="AppMessage_content">
+                <mat-spinner class="loader"></mat-spinner>
+            </div>
+        </div>
+
+    </ng-container>
+
+</div>

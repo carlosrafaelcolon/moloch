@@ -1,0 +1,5 @@
+<div class="AppConversationList" *ngFor="let conversation of (conversations$ | async) || []">
+    <div class="ConversationItem" (click)="handleConversationSelection(conversation)">
+        <span>{{conversation.id}}</span>
+    </div>
+</div>

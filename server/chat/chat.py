@@ -1,24 +1,84 @@
-from server.chat.models import QArgs
-from server.chat.vector_stores.pinecone import build_retriever
-from langchain.chains import RetrievalQA
+import random 
+from server.chat.models import ChatArgs
+from server.chat.vector_stores import retriever_map
+from server.chat.llms import llm_map
+#from server.chat.llms.chatopenai import build_llm
+from server.chat.memories import memory_map
+#from server.chat.memories.sql_memory import build_memory
+from server.chat.chains.retrieval import StreamingConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 
-def build_q(q_args: QArgs):
-    chat_model = ChatOpenAI()
-    retriever = build_retriever(q_args)
-    chain = RetrievalQA.from_chain_type(
-        llm=chat_model,
-        retriever=retriever,
-        chain_type="stuff"
+from server.api import (
+    set_conversation_components,
+    get_conversation_components
+)
+
+def select_component(
+    component_type,
+    component_map,
+    chat_args
+):
+ 
+    components = get_conversation_components(
+        chat_args.conversation_id
     )
-    return chain
 
-# for demonstration purposes - delete in completed version
-def main():
-    q_args = QArgs(eventid="202001010001")  # Initialize QArgs with the necessary arguments
-    chain = build_q(q_args)
-    result = chain.run("What is the method of attack and the weapon used?")
-    print(result)
-    return result
 
-  
+    previous_component = components[component_type]
+   
+    
+    if previous_component:
+        builder = component_map[previous_component]
+        return previous_component, builder(chat_args)
+
+    else:
+        # print('random choice')
+        # print(random.choice(list(component_map.keys())))
+        # print('builder - component_map[random_name]')
+        # print(component_map[random_name])
+        # print("chat_args")
+        # print(chat_args)
+        random_name = random.choice(list(component_map.keys()))
+        builder = component_map[random_name]
+        return random_name, builder(chat_args)
+    
+    
+def build_chat(chat_args):
+
+    retriever_name, retriever = select_component(
+        "retriever",
+        retriever_map,
+        chat_args
+    )
+
+    
+    llm_name, llm = select_component(
+        "llm",
+        llm_map,
+        chat_args
+    )
+    
+    
+    memory_name, memory = select_component(
+        "memory",
+        memory_map,
+        chat_args
+    ) 
+   
+    set_conversation_components(
+        chat_args.conversation_id,
+        llm=llm_name,
+        retriever=retriever_name,
+        memory=memory_name
+    )
+    
+    condense_question_llm = ChatOpenAI(streaming=False)
+ 
+    
+    return StreamingConversationalRetrievalChain.from_llm(
+        llm=llm,
+        condense_question_llm=condense_question_llm,
+        memory=memory,
+        retriever=retriever,
+        metadata=chat_args.metadata
+    )

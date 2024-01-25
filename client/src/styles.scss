@@ -1,0 +1,174 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+$brand-red: #c11112;
+$brand-black: #222222;
+$brand-grey:#999999;
+$umd-gold:#ffd200;
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// Custom palette for the red color
+
+$custom-red-palette:(
+  50: #f8514a,   // lighter red
+  100: #fC402C,  // slightly lighter red
+  200: #ee3626,  // ...
+  300: #dc2a27,
+  400: #d0221f,
+  500: #c11112, // your brand red
+  600: #ac0f0f,  // slightly darker
+  700: #990d0d,  // darker red
+  800: #850b0b,  // more darker red
+  900: #710909,  // darkest red
+  A100: #f69a98, // light alternative red
+  A200: #fC402C, // default alternative red
+  A400: #dc2a27, // dark alternative red
+  A700: #c11112, // darkest alternative red
+  contrast: (
+    50: #000000,  // Dark text for light background
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,  // Light text for brand red
+    600: #ffffff,  // Light text for slightly darker red
+    700: #ffffff,  // Light text for darker red
+    800: #ffffff,  // Light text for more darker red
+    900: #ffffff,  // Light text for darkest red
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+
+
+$custom-gold-palette:(
+  50: #fff9e0,   
+  100: #ffeeb1,  
+  200: #ffe47d,  
+  300: #ffdb44,
+  400: #ffd200,
+  500: #ffc800, 
+  600: #ffb900,
+  700: #ffb900,  
+  800: #ff9300,  
+  900: #ff7200, 
+  A100: #ffe47d, 
+  A200: #ffd200,
+  A400: #ffb900, 
+  A700: #ff7200, 
+  contrast: (
+    50: #000000,  // Dark text for very light background
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000, // Dark text for mid tones
+    600: #000000,
+    700: #000000,
+    800: #ffffff, // Light text for darker background
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #ffffff,
+  ),
+);
+
+
+$client-primary: mat.define-palette($custom-red-palette);
+$client-accent: mat.define-palette($custom-gold-palette, 500, 300, 700);
+
+// The warn palette is optional (defaults to red).
+$client-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$client-theme: mat.define-light-theme((color: (primary: $client-primary,
+        accent: $client-accent,
+        warn: $client-warn,
+      )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($client-theme);
+
+
+
+
+
+
+
+/* You can add global styles to this file, and also import other style files */
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.AppMessage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &_role {
+    display: flex;
+
+    .role-header {
+      font-weight: 500;
+      font-size: 20px;
+      text-transform: capitalize;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+  }
+
+  &_content {
+    overflow-wrap: break-word;
+    &.user {
+      padding-bottom:23px;
+    }
+    mat-spinner.loader {
+      width: 50px !important;
+      height: 50px !important;
+      --mdc-circular-progress-size: 50px !important;
+      --mdc-circular-progress-active-indicator-width: 50px !important;
+      margin-top: 10px;
+      margin-bottom: 15px;
+
+
+    }
+  }
+  &_action {
+    display: flex;
+    justify-content: center;
+    button {
+      &:first-of-type {
+        margin-right:10px;
+      }
+      &:last-of-type {
+        margin-left: 10px;
+      }
+    }
+  }
+}

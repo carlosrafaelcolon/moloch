@@ -1,0 +1,23 @@
+<!-- <style>
+	.message {
+		max-width: 100%;
+	}
+</style>
+
+
+<div class="message border rounded-md py-1 px-2.5 my-0.25 break-words self-end bg-slate-200" [innerHtml]="content" style="
+padding-top: 0.25rem;
+padding-bottom: 0.25rem; 
+padding-left: 0.625rem; 
+padding-right: 0.625rem; 
+margin-top: 0.125rem; 
+margin-bottom: 0.125rem; 
+overflow-wrap: break-word;
+"></div> -->
+
+<div class="AppMessage">
+	<div class="AppMessage_role">
+		<div class="role-header">You</div>
+	</div>
+	<div class="AppMessage_content user" [innerHtml]="content"></div>
+</div>

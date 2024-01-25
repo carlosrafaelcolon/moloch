@@ -1,7 +1,6 @@
-
-git reset server/db/emb_mpnet
-git reset server/db/emb_openai
-git reset server/db/emb_mpnet_test
+server/db/emb_mpnet
+server/db/emb_openai
+server/db/emb_mpnet_test
 
 
 # Angular/Python cache directory

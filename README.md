@@ -20,3 +20,9 @@ pip install -r requirements.txt
 ```
 flask run
 ```
+
+### To run the client
+
+```
+npm start
+```
